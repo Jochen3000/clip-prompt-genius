@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold, FileData } from "@google/generative-ai";
 
-const MODEL_NAME = "gemini-1.5-flash-latest"; // Using a generally available model
+const MODEL_NAME = "gemini-2.5-flash-preview-05-20"; // Updated model name
 
 export async function analyzeVideoWithGemini(
   apiKey: string,
@@ -46,7 +46,7 @@ export async function analyzeVideoWithGemini(
       } as FileData, // Cast to FileData to satisfy the type, as the SDK expects specific properties
     };
     
-    console.log("Sending to Gemini API:", { prompt, videoUrl });
+    console.log("Sending to Gemini API:", { prompt, videoUrl, model: MODEL_NAME }); // Added model name to log
 
     const result = await model.generateContent([prompt, videoFile]);
     const response = result.response;
@@ -68,6 +68,10 @@ export async function analyzeVideoWithGemini(
       // This part is a bit speculative as error structure can vary
       const googleError = (error as any)?.errorInfo || (error as any)?.details;
       if (googleError) {
+        // Check if the error is about the model not being found or accessible
+        if (googleError.message && (googleError.message.includes("model not found") || googleError.message.includes("User location is not within rage of allowed regions"))) {
+          return `Error from Gemini API: ${googleError.message}. The specified model '${MODEL_NAME}' might not be available or accessible from your region.`;
+        }
         return `Error from Gemini API: ${googleError.message || JSON.stringify(googleError)}`;
       }
       return `Error analyzing video: ${error.message}`;
