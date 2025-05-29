@@ -94,15 +94,15 @@ const UXPromptLibrary: React.FC<UXPromptLibraryProps> = ({ onPromptSelect }) => 
           className="h-auto p-4 bg-gray-700 border-gray-600 hover:border-orange-500 hover:bg-gray-600 text-left justify-start transition-colors"
           onClick={() => onPromptSelect(prompt.prompt)}
         >
-          <div className="flex items-start gap-3 w-full">
+          <div className="flex items-start gap-3 w-full text-left">
             <div className="text-orange-500 mt-1 flex-shrink-0">
               {prompt.icon}
             </div>
             <div className="flex-1 text-left">
-              <div className="font-medium text-white mb-1 text-sm">
+              <div className="font-medium text-white mb-1 text-sm text-left">
                 {prompt.title}
               </div>
-              <div className="text-xs text-gray-300 leading-relaxed">
+              <div className="text-xs text-gray-300 leading-relaxed text-left">
                 {prompt.description}
               </div>
             </div>
