@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,14 +8,14 @@ import { analyzeVideoWithGemini } from '@/services/geminiService';
 import { Loader2, Play } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import UXPromptLibrary from '@/components/UXPromptLibrary';
-
 const IndexPage = () => {
   const [videoUrl, setVideoUrl] = useState('');
   const [prompt, setPrompt] = useState('');
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handlePromptSelect = (selectedPrompt: string) => {
     setPrompt(selectedPrompt);
     toast({
@@ -24,10 +23,8 @@ const IndexPage = () => {
       description: "UX analysis prompt has been loaded. You can modify it if needed."
     });
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!videoUrl.trim()) {
       toast({
         title: "Video URL Missing",
@@ -36,23 +33,19 @@ const IndexPage = () => {
       });
       return;
     }
-    
     if (!prompt.trim()) {
       toast({
-        title: "Prompt Missing", 
+        title: "Prompt Missing",
         description: "Please enter your prompt.",
         variant: "destructive"
       });
       return;
     }
-
     setIsLoading(true);
     setResponse('');
-
     try {
       const result = await analyzeVideoWithGemini(prompt, videoUrl);
       setResponse(result);
-      
       if (result.toLowerCase().startsWith("error:")) {
         toast({
           title: "Analysis Error",
@@ -77,9 +70,7 @@ const IndexPage = () => {
       setIsLoading(false);
     }
   };
-
-  return (
-    <div className="min-h-screen bg-gray-900">
+  return <div className="min-h-screen bg-gray-900">
       {/* Header */}
       <header className="bg-gray-800 border-b border-gray-700 py-6">
         <div className="max-w-4xl mx-auto px-6">
@@ -88,7 +79,7 @@ const IndexPage = () => {
               <Play className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white">UX Testing Analyzr</h1>
+              <h1 className="text-2xl font-bold text-white">UX Testing Analyzer</h1>
               <p className="text-sm text-gray-400">Powered by Google's Gemini AI</p>
             </div>
           </div>
@@ -103,33 +94,19 @@ const IndexPage = () => {
             <h2 className="text-4xl font-bold text-white leading-tight">
               Analyze User Testing Videos with AI
             </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Upload your usability test videos and get comprehensive UX insights powered by advanced AI analysis.
-            </p>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">Upload your UX testing videos and get comprehensive UX insights </p>
           </div>
 
           {/* Analysis Form */}
           <Card className="bg-gray-800 border-gray-700 shadow-xl">
-            <CardHeader className="pb-6">
-              <CardTitle className="text-xl font-semibold text-white">Video Analysis</CardTitle>
-              <CardDescription className="text-gray-400">
-                Provide a publicly accessible video URL (e.g., direct MP4 link) and select your analysis focus.
-              </CardDescription>
-            </CardHeader>
+            
             <form onSubmit={handleSubmit}>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="videoUrl" className="text-sm font-medium text-gray-200">
                     Video URL
                   </Label>
-                  <Input
-                    id="videoUrl"
-                    type="url"
-                    placeholder="https://example.com/video.mp4"
-                    value={videoUrl}
-                    onChange={(e) => setVideoUrl(e.target.value)}
-                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500"
-                  />
+                  <Input id="videoUrl" type="url" placeholder="https://example.com/video.mp4" value={videoUrl} onChange={e => setVideoUrl(e.target.value)} className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500" />
                 </div>
                 
                 <div className="space-y-4">
@@ -140,40 +117,25 @@ const IndexPage = () => {
                   <Label htmlFor="prompt" className="text-sm font-medium text-gray-200">
                     Analysis Prompt
                   </Label>
-                  <Textarea
-                    id="prompt"
-                    placeholder="Describe what you'd like to analyze in the video..."
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500 min-h-[120px]"
-                  />
+                  <Textarea id="prompt" placeholder="Describe what you'd like to analyze in the video..." value={prompt} onChange={e => setPrompt(e.target.value)} className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500 min-h-[120px]" />
                 </div>
               </CardContent>
               <CardFooter className="pt-0">
-                <Button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 h-auto border-none"
-                >
-                  {isLoading ? (
-                    <>
+                <Button type="submit" disabled={isLoading} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 h-auto border-none">
+                  {isLoading ? <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Analyzing Video...
-                    </>
-                  ) : (
-                    <>
+                    </> : <>
                       <Play className="mr-2 h-4 w-4" />
                       Analyze Video
-                    </>
-                  )}
+                    </>}
                 </Button>
               </CardFooter>
             </form>
           </Card>
 
           {/* Results */}
-          {response && (
-            <Card className="bg-gray-800 border-gray-700 shadow-xl">
+          {response && <Card className="bg-gray-800 border-gray-700 shadow-xl">
               <CardHeader>
                 <CardTitle className="text-xl font-semibold text-white">Analysis Results</CardTitle>
               </CardHeader>
@@ -184,8 +146,7 @@ const IndexPage = () => {
                   </pre>
                 </div>
               </CardContent>
-            </Card>
-          )}
+            </Card>}
         </div>
       </main>
 
@@ -197,8 +158,6 @@ const IndexPage = () => {
           </p>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default IndexPage;
