@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -89,8 +90,6 @@ const IndexPage = () => {
           </p>
         </header>
 
-        <UXPromptLibrary onPromptSelect={handlePromptSelect} />
-
         <Card className="bg-slate-800 border-slate-700 shadow-xl">
           <CardHeader>
             <CardTitle className="text-2xl text-slate-100">Analyze Video</CardTitle>
@@ -112,6 +111,11 @@ const IndexPage = () => {
                   className="bg-slate-700 border-slate-600 text-slate-50 placeholder-slate-500 focus:ring-pink-500"
                 />
               </div>
+              
+              <div className="space-y-4">
+                <UXPromptLibrary onPromptSelect={handlePromptSelect} />
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="prompt" className="text-slate-300">Your Prompt</Label>
                 <Textarea
