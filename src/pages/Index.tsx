@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { analyzeVideoWithGemini } from '@/services/geminiService';
 import { Loader2 } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import UXPromptLibrary from '@/components/UXPromptLibrary';
 
 const IndexPage = () => {
   const [videoUrl, setVideoUrl] = useState('');
@@ -15,6 +15,14 @@ const IndexPage = () => {
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+
+  const handlePromptSelect = (selectedPrompt: string) => {
+    setPrompt(selectedPrompt);
+    toast({
+      title: "Prompt Selected",
+      description: "UX analysis prompt has been loaded. You can modify it if needed."
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,6 +88,8 @@ const IndexPage = () => {
             Leverage Google's Gemini API to understand video content with secure backend processing.
           </p>
         </header>
+
+        <UXPromptLibrary onPromptSelect={handlePromptSelect} />
 
         <Card className="bg-slate-800 border-slate-700 shadow-xl">
           <CardHeader>
