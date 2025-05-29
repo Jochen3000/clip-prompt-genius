@@ -7,6 +7,20 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+function isDirectVideoUrl(url: string): boolean {
+  try {
+    const urlObj = new URL(url);
+    const pathname = urlObj.pathname.toLowerCase();
+    return pathname.endsWith('.mp4') || pathname.endsWith('.mov') || pathname.endsWith('.avi') || pathname.endsWith('.webm');
+  } catch {
+    return false;
+  }
+}
+
+function isYouTubeUrl(url: string): boolean {
+  return url.includes('youtube.com') || url.includes('youtu.be');
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -19,6 +33,32 @@ serve(async (req) => {
     if (!prompt || !videoUrl) {
       return new Response(
         JSON.stringify({ error: 'Missing prompt or videoUrl' }), 
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
+    // Check if it's a YouTube URL
+    if (isYouTubeUrl(videoUrl)) {
+      return new Response(
+        JSON.stringify({ 
+          error: 'YouTube URLs are not supported. Please provide a direct video file URL (e.g., https://example.com/video.mp4). You can upload your video to a file hosting service or use a direct MP4 link.' 
+        }), 
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
+    // Check if it's a direct video URL
+    if (!isDirectVideoUrl(videoUrl)) {
+      return new Response(
+        JSON.stringify({ 
+          error: 'Please provide a direct video file URL ending with .mp4, .mov, .avi, or .webm (e.g., https://example.com/video.mp4)' 
+        }), 
         { 
           status: 400, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
@@ -91,6 +131,28 @@ serve(async (req) => {
     if (!response.ok) {
       const errorData = await response.text();
       console.error('Gemini API error:', errorData);
+      
+      // Handle specific error cases
+      if (response.status === 503) {
+        return new Response(
+          JSON.stringify({ error: 'The Gemini API is currently overloaded. Please try again in a few minutes.' }), 
+          { 
+            status: 503, 
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+          }
+        );
+      }
+      
+      if (response.status === 400) {
+        return new Response(
+          JSON.stringify({ error: 'Invalid request. Please check that your video URL is accessible and in a supported format.' }), 
+          { 
+            status: 400, 
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+          }
+        );
+      }
+
       return new Response(
         JSON.stringify({ error: `Gemini API error: ${response.status} - ${errorData}` }), 
         { 

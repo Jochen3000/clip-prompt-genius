@@ -37,6 +37,16 @@ const IndexPage = () => {
       return;
     }
 
+    // Check for YouTube URLs
+    if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+      toast({
+        title: "YouTube URLs Not Supported",
+        description: "Please use a direct video file URL (e.g., .mp4, .mov, .avi, .webm) instead.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsLoading(true);
     setResponse('');
 
@@ -85,8 +95,11 @@ const IndexPage = () => {
           <CardHeader>
             <CardTitle className="text-2xl text-slate-100">Analyze Video</CardTitle>
             <CardDescription className="text-slate-400">
-              Provide a video URL and a prompt to analyze its content.
-              Note: The video URL must be publicly accessible (e.g., direct MP4 link).
+              Provide a direct video file URL and a prompt to analyze its content.
+              <br />
+              <strong>Supported formats:</strong> .mp4, .mov, .avi, .webm
+              <br />
+              <strong>Note:</strong> YouTube URLs are not supported. Use direct video file links.
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
