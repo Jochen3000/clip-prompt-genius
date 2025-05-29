@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Play, Users, AlertTriangle, Heart, Lightbulb } from 'lucide-react';
+import { Card, CardContent } from "@/components/ui/card";
+import { Play, AlertTriangle, Heart, Lightbulb } from 'lucide-react';
 
 interface UXPrompt {
   id: string;
@@ -88,16 +88,7 @@ interface UXPromptLibraryProps {
 const UXPromptLibrary: React.FC<UXPromptLibraryProps> = ({ onPromptSelect }) => {
   return (
     <Card className="bg-slate-800 border-slate-700 shadow-xl">
-      <CardHeader>
-        <CardTitle className="text-xl text-slate-100 flex items-center gap-2">
-          <Users className="h-5 w-5" />
-          UX Research Prompt Library
-        </CardTitle>
-        <CardDescription className="text-slate-400">
-          Choose a specialized analysis type for your usability test video
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-3 pt-6">
         {uxPrompts.map((prompt) => (
           <Button
             key={prompt.id}
