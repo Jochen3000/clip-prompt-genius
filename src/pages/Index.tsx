@@ -8,7 +8,6 @@ import { analyzeVideoWithGemini } from '@/services/geminiService';
 import { Loader2, Play } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import UXPromptLibrary from '@/components/UXPromptLibrary';
-
 const IndexPage = () => {
   const [videoUrl, setVideoUrl] = useState('');
   const [prompt, setPrompt] = useState('');
@@ -71,8 +70,7 @@ const IndexPage = () => {
       setIsLoading(false);
     }
   };
-  return (
-    <div className="min-h-screen bg-gray-900">
+  return <div className="min-h-screen bg-gray-900">
       {/* Header */}
       <header className="bg-gray-800 border-b border-gray-700 py-6">
         <div className="max-w-4xl mx-auto px-6">
@@ -82,7 +80,7 @@ const IndexPage = () => {
             </div>
             <div className="text-left">
               <h1 className="text-2xl font-bold text-white">UX Testing Analyzer</h1>
-              <p className="text-sm text-gray-400">Powered by Google's Gemini AI</p>
+              
             </div>
           </div>
         </div>
@@ -106,14 +104,7 @@ const IndexPage = () => {
                   <Label htmlFor="videoUrl" className="text-sm font-medium text-gray-200 text-left block">
                     Video URL
                   </Label>
-                  <Input 
-                    id="videoUrl" 
-                    type="url" 
-                    placeholder="https://example.com/video.mp4" 
-                    value={videoUrl} 
-                    onChange={e => setVideoUrl(e.target.value)} 
-                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500" 
-                  />
+                  <Input id="videoUrl" type="url" placeholder="https://example.com/video.mp4" value={videoUrl} onChange={e => setVideoUrl(e.target.value)} className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500" />
                 </div>
                 
                 <div className="space-y-4">
@@ -124,40 +115,25 @@ const IndexPage = () => {
                   <Label htmlFor="prompt" className="text-sm font-medium text-gray-200 text-left block">
                     Analysis Prompt
                   </Label>
-                  <Textarea 
-                    id="prompt" 
-                    placeholder="Describe what you'd like to analyze in the video..." 
-                    value={prompt} 
-                    onChange={e => setPrompt(e.target.value)} 
-                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500 min-h-[120px] text-left" 
-                  />
+                  <Textarea id="prompt" placeholder="Describe what you'd like to analyze in the video..." value={prompt} onChange={e => setPrompt(e.target.value)} className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500 min-h-[120px] text-left" />
                 </div>
               </CardContent>
               <CardFooter className="pt-0 px-6 pb-6">
-                <Button 
-                  type="submit" 
-                  disabled={isLoading} 
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 h-auto border-none"
-                >
-                  {isLoading ? (
-                    <>
+                <Button type="submit" disabled={isLoading} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 h-auto border-none">
+                  {isLoading ? <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Analyzing Video...
-                    </>
-                  ) : (
-                    <>
+                    </> : <>
                       <Play className="mr-2 h-4 w-4" />
                       Analyze Video
-                    </>
-                  )}
+                    </>}
                 </Button>
               </CardFooter>
             </form>
           </Card>
 
           {/* Results */}
-          {response && (
-            <Card className="bg-gray-800 border-gray-700 shadow-xl">
+          {response && <Card className="bg-gray-800 border-gray-700 shadow-xl">
               <CardHeader className="pb-4">
                 <CardTitle className="text-xl font-semibold text-white text-left">
                   Analysis Results
@@ -170,8 +146,7 @@ const IndexPage = () => {
                   </pre>
                 </div>
               </CardContent>
-            </Card>
-          )}
+            </Card>}
         </div>
       </main>
 
@@ -183,8 +158,6 @@ const IndexPage = () => {
           </p>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default IndexPage;
