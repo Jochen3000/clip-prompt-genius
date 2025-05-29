@@ -79,17 +79,17 @@ const IndexPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-900">
       {/* Header */}
-      <header className="bg-white border-b border-gray-100 py-6">
+      <header className="bg-gray-800 border-b border-gray-700 py-6">
         <div className="max-w-4xl mx-auto px-6">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
               <Play className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">UX Testing Analyzr</h1>
-              <p className="text-sm text-gray-600">Powered by Google's Gemini AI</p>
+              <h1 className="text-2xl font-bold text-white">UX Testing Analyzr</h1>
+              <p className="text-sm text-gray-400">Powered by Google's Gemini AI</p>
             </div>
           </div>
         </div>
@@ -100,26 +100,26 @@ const IndexPage = () => {
         <div className="space-y-8">
           {/* Hero Section */}
           <div className="text-center space-y-4">
-            <h2 className="text-4xl font-bold text-gray-900 leading-tight">
+            <h2 className="text-4xl font-bold text-white leading-tight">
               Analyze User Testing Videos with AI
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Upload your usability test videos and get comprehensive UX insights powered by advanced AI analysis.
             </p>
           </div>
 
           {/* Analysis Form */}
-          <Card className="bg-white border border-gray-200 shadow-sm">
+          <Card className="bg-gray-800 border-gray-700 shadow-xl">
             <CardHeader className="pb-6">
-              <CardTitle className="text-xl font-semibold text-gray-900">Video Analysis</CardTitle>
-              <CardDescription className="text-gray-600">
+              <CardTitle className="text-xl font-semibold text-white">Video Analysis</CardTitle>
+              <CardDescription className="text-gray-400">
                 Provide a publicly accessible video URL (e.g., direct MP4 link) and select your analysis focus.
               </CardDescription>
             </CardHeader>
             <form onSubmit={handleSubmit}>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="videoUrl" className="text-sm font-medium text-gray-700">
+                  <Label htmlFor="videoUrl" className="text-sm font-medium text-gray-200">
                     Video URL
                   </Label>
                   <Input
@@ -128,17 +128,16 @@ const IndexPage = () => {
                     placeholder="https://example.com/video.mp4"
                     value={videoUrl}
                     onChange={(e) => setVideoUrl(e.target.value)}
-                    className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500"
                   />
                 </div>
                 
                 <div className="space-y-4">
-                  <Label className="text-sm font-medium text-gray-700">Analysis Templates</Label>
                   <UXPromptLibrary onPromptSelect={handlePromptSelect} />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="prompt" className="text-sm font-medium text-gray-700">
+                  <Label htmlFor="prompt" className="text-sm font-medium text-gray-200">
                     Analysis Prompt
                   </Label>
                   <Textarea
@@ -146,7 +145,7 @@ const IndexPage = () => {
                     placeholder="Describe what you'd like to analyze in the video..."
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
-                    className="border-gray-300 focus:border-blue-500 focus:ring-blue-500 min-h-[120px]"
+                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500 min-h-[120px]"
                   />
                 </div>
               </CardContent>
@@ -154,7 +153,7 @@ const IndexPage = () => {
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 h-auto"
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 h-auto border-none"
                 >
                   {isLoading ? (
                     <>
@@ -174,13 +173,13 @@ const IndexPage = () => {
 
           {/* Results */}
           {response && (
-            <Card className="bg-white border border-gray-200 shadow-sm">
+            <Card className="bg-gray-800 border-gray-700 shadow-xl">
               <CardHeader>
-                <CardTitle className="text-xl font-semibold text-gray-900">Analysis Results</CardTitle>
+                <CardTitle className="text-xl font-semibold text-white">Analysis Results</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="bg-gray-50 rounded-lg p-6">
-                  <pre className="whitespace-pre-wrap text-sm text-gray-800 font-mono leading-relaxed">
+                <div className="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                  <pre className="whitespace-pre-wrap text-sm text-gray-200 font-mono leading-relaxed">
                     {response}
                   </pre>
                 </div>
@@ -191,9 +190,9 @@ const IndexPage = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-50 border-t border-gray-200 py-8 mt-16">
+      <footer className="bg-gray-800 border-t border-gray-700 py-8 mt-16">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-400">
             Secure video analysis with enterprise-grade AI processing
           </p>
         </div>

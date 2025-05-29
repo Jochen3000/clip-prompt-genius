@@ -91,18 +91,18 @@ const UXPromptLibrary: React.FC<UXPromptLibraryProps> = ({ onPromptSelect }) => 
         <Button
           key={prompt.id}
           variant="outline"
-          className="h-auto p-4 border-gray-200 hover:border-blue-300 hover:bg-blue-50 text-left justify-start transition-colors"
+          className="h-auto p-4 bg-gray-700 border-gray-600 hover:border-orange-500 hover:bg-gray-600 text-left justify-start transition-colors"
           onClick={() => onPromptSelect(prompt.prompt)}
         >
           <div className="flex items-start gap-3 w-full">
-            <div className="text-blue-600 mt-1 flex-shrink-0">
+            <div className="text-orange-500 mt-1 flex-shrink-0">
               {prompt.icon}
             </div>
             <div className="flex-1 text-left">
-              <div className="font-medium text-gray-900 mb-1 text-sm">
+              <div className="font-medium text-white mb-1 text-sm">
                 {prompt.title}
               </div>
-              <div className="text-xs text-gray-600 leading-relaxed">
+              <div className="text-xs text-gray-300 leading-relaxed">
                 {prompt.description}
               </div>
             </div>
