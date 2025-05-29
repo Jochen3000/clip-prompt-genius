@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Play, AlertTriangle, Heart, Lightbulb } from 'lucide-react';
 
 interface UXPrompt {
@@ -87,32 +86,30 @@ interface UXPromptLibraryProps {
 
 const UXPromptLibrary: React.FC<UXPromptLibraryProps> = ({ onPromptSelect }) => {
   return (
-    <Card className="bg-slate-800 border-slate-700 shadow-xl">
-      <CardContent className="space-y-3 pt-6">
-        {uxPrompts.map((prompt) => (
-          <Button
-            key={prompt.id}
-            variant="outline"
-            className="w-full h-auto p-4 bg-slate-700 border-slate-600 hover:bg-slate-600 text-left justify-start"
-            onClick={() => onPromptSelect(prompt.prompt)}
-          >
-            <div className="flex items-start gap-3 w-full">
-              <div className="text-purple-400 mt-1">
-                {prompt.icon}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      {uxPrompts.map((prompt) => (
+        <Button
+          key={prompt.id}
+          variant="outline"
+          className="h-auto p-4 border-gray-200 hover:border-blue-300 hover:bg-blue-50 text-left justify-start transition-colors"
+          onClick={() => onPromptSelect(prompt.prompt)}
+        >
+          <div className="flex items-start gap-3 w-full">
+            <div className="text-blue-600 mt-1 flex-shrink-0">
+              {prompt.icon}
+            </div>
+            <div className="flex-1 text-left">
+              <div className="font-medium text-gray-900 mb-1 text-sm">
+                {prompt.title}
               </div>
-              <div className="flex-1 text-left">
-                <div className="font-semibold text-slate-100 mb-1">
-                  {prompt.title}
-                </div>
-                <div className="text-sm text-slate-400">
-                  {prompt.description}
-                </div>
+              <div className="text-xs text-gray-600 leading-relaxed">
+                {prompt.description}
               </div>
             </div>
-          </Button>
-        ))}
-      </CardContent>
-    </Card>
+          </div>
+        </Button>
+      ))}
+    </div>
   );
 };
 

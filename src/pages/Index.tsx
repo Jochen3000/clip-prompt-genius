@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { analyzeVideoWithGemini } from '@/services/geminiService';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Play } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import UXPromptLibrary from '@/components/UXPromptLibrary';
 
@@ -79,86 +79,125 @@ const IndexPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-slate-50 py-8 px-4 flex flex-col items-center">
-      <div className="w-full max-w-2xl space-y-8">
-        <header className="text-center">
-          <h1 className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-4xl">
-            UX Testing Analyzr
-          </h1>
-          <p className="mt-2 text-lg text-slate-400">
-            Leverage Google's Gemini API to understand video content with secure backend processing.
-          </p>
-        </header>
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-100 py-6">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+              <Play className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">UX Testing Analyzr</h1>
+              <p className="text-sm text-gray-600">Powered by Google's Gemini AI</p>
+            </div>
+          </div>
+        </div>
+      </header>
 
-        <Card className="bg-slate-800 border-slate-700 shadow-xl">
-          <CardHeader>
-            <CardTitle className="text-2xl text-slate-100">Analyze Video</CardTitle>
-            <CardDescription className="text-slate-400">
-              Provide a video URL and a prompt to analyze its content.
-              Note: The video URL must be publicly accessible (e.g., direct MP4 link).
-            </CardDescription>
-          </CardHeader>
-          <form onSubmit={handleSubmit}>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="videoUrl" className="text-slate-300">Video URL</Label>
-                <Input
-                  id="videoUrl"
-                  type="url"
-                  placeholder="e.g., https://example.com/video.mp4"
-                  value={videoUrl}
-                  onChange={(e) => setVideoUrl(e.target.value)}
-                  className="bg-slate-700 border-slate-600 text-slate-50 placeholder-slate-500 focus:ring-pink-500"
-                />
-              </div>
-              
-              <div className="space-y-4">
-                <UXPromptLibrary onPromptSelect={handlePromptSelect} />
-              </div>
+      {/* Main Content */}
+      <main className="max-w-4xl mx-auto px-6 py-12">
+        <div className="space-y-8">
+          {/* Hero Section */}
+          <div className="text-center space-y-4">
+            <h2 className="text-4xl font-bold text-gray-900 leading-tight">
+              Analyze User Testing Videos with AI
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Upload your usability test videos and get comprehensive UX insights powered by advanced AI analysis.
+            </p>
+          </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="prompt" className="text-slate-300">Your Prompt</Label>
-                <Textarea
-                  id="prompt"
-                  placeholder="e.g., Summarize this video in 3 sentences. What objects are visible?"
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  className="bg-slate-700 border-slate-600 text-slate-50 placeholder-slate-500 focus:ring-pink-500 min-h-[100px]"
-                />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold py-3 transition-all duration-300 ease-in-out transform hover:scale-105 disabled:opacity-70"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Analyzing...
-                  </>
-                ) : (
-                  'Analyze Video'
-                )}
-              </Button>
-            </CardFooter>
-          </form>
-        </Card>
-
-        {response && (
-          <Card className="bg-slate-800 border-slate-700 shadow-xl">
-            <CardHeader>
-              <CardTitle className="text-2xl text-slate-100">API Response</CardTitle>
+          {/* Analysis Form */}
+          <Card className="bg-white border border-gray-200 shadow-sm">
+            <CardHeader className="pb-6">
+              <CardTitle className="text-xl font-semibold text-gray-900">Video Analysis</CardTitle>
+              <CardDescription className="text-gray-600">
+                Provide a publicly accessible video URL (e.g., direct MP4 link) and select your analysis focus.
+              </CardDescription>
             </CardHeader>
-            <CardContent>
-              <pre className="whitespace-pre-wrap text-slate-300 bg-slate-700 p-4 rounded-md overflow-x-auto">
-                {response}
-              </pre>
-            </CardContent>
+            <form onSubmit={handleSubmit}>
+              <CardContent className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="videoUrl" className="text-sm font-medium text-gray-700">
+                    Video URL
+                  </Label>
+                  <Input
+                    id="videoUrl"
+                    type="url"
+                    placeholder="https://example.com/video.mp4"
+                    value={videoUrl}
+                    onChange={(e) => setVideoUrl(e.target.value)}
+                    className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  />
+                </div>
+                
+                <div className="space-y-4">
+                  <Label className="text-sm font-medium text-gray-700">Analysis Templates</Label>
+                  <UXPromptLibrary onPromptSelect={handlePromptSelect} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="prompt" className="text-sm font-medium text-gray-700">
+                    Analysis Prompt
+                  </Label>
+                  <Textarea
+                    id="prompt"
+                    placeholder="Describe what you'd like to analyze in the video..."
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    className="border-gray-300 focus:border-blue-500 focus:ring-blue-500 min-h-[120px]"
+                  />
+                </div>
+              </CardContent>
+              <CardFooter className="pt-0">
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 h-auto"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Analyzing Video...
+                    </>
+                  ) : (
+                    <>
+                      <Play className="mr-2 h-4 w-4" />
+                      Analyze Video
+                    </>
+                  )}
+                </Button>
+              </CardFooter>
+            </form>
           </Card>
-        )}
-      </div>
+
+          {/* Results */}
+          {response && (
+            <Card className="bg-white border border-gray-200 shadow-sm">
+              <CardHeader>
+                <CardTitle className="text-xl font-semibold text-gray-900">Analysis Results</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="bg-gray-50 rounded-lg p-6">
+                  <pre className="whitespace-pre-wrap text-sm text-gray-800 font-mono leading-relaxed">
+                    {response}
+                  </pre>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-50 border-t border-gray-200 py-8 mt-16">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <p className="text-sm text-gray-600">
+            Secure video analysis with enterprise-grade AI processing
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
